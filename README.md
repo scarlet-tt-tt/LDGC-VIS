@@ -150,6 +150,3 @@ TODO
 ## Acknowledgments
 
 Thanks to these great repositories: [Croco](https://github.com/naver/croco), [DUSt3R](https://github.com/naver/dust3r), [reloc3r](https://github.com/ffrivera0/reloc3r),[starnet](https://github.com/ma-xu/Rewrite-the-Stars),[deepICN](https://github.com/lvzhaoyang/DeeperInverseCompositionalAlgorithm), [deeplab v3](https://github.com/fregu856/deeplabv3) and many other inspiring works in the community.
-# LEM-SFM
-# LEM-SFM
-# LEM-SFM

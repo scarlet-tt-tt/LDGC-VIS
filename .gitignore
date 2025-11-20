@@ -1,5 +1,5 @@
-data/
-raw_data/
+data/scannet1500
+# raw_data/
 logs/
 croco/
 reloc3r/
