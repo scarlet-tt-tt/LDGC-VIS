@@ -1,4 +1,6 @@
 data/
 raw_data/
 logs/
+croco/
+reloc3r/
 *.pyc
