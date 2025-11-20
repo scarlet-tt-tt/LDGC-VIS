@@ -1,0 +1,6 @@
+Test:	Epoch 1	TUM_RGBD_1_000 @ ScanNet1500_epe3d 0.07954708 TUM_RGBD_1_000 @ ScanNet1500_rpe_angular 0.06194456 TUM_RGBD_1_000 @ ScanNet1500_rpe_translation 0.02750157 
+ =============================================================== 
+             Generate the final evaluation results               
+ =============================================================== 
+     3D EPE  axis error  trans error  total frames
+0  7.954708    3.549162     2.750157        1000.0

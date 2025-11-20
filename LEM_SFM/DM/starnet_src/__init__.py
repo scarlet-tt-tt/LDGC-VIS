@@ -1,0 +1,1 @@
+from .midas_starnet import MidasNet_small7
