@@ -23,12 +23,8 @@ from IMU import simulate_pose_from_imu
 from LEM_SFM.data.dataloader import load_data
 from LEM_SFM.timers import Timers
 from tqdm import tqdm
-# from relative_depth.evaluate import compute_scale_and_shift,compute_errors,RunningAverageDict
-
-os.environ['CUDA_VISIBLE_DEVICES'] = '4,5'
 
 import warnings
-# 忽略 imageio 中关于 Pillow 的 16位 PNG 警告
 warnings.filterwarnings("ignore", category=UserWarning, module="imageio.plugins.pillow")
 warnings.filterwarnings(
     "ignore", 
@@ -64,7 +60,6 @@ def test_TrustRegion_A_Reloc3r(args,model_args):
     else:
         timers = None
 
-    
     obj_has_mask = False
     print('Building test dataset {:s}'.format(args.test_dataset))
     data_loader_test = {dataset.split('(')[0]: build_dataset(dataset, args.batch_size, args.num_workers, test=True)
@@ -86,14 +81,12 @@ def test_TrustRegion_A_Reloc3r(args,model_args):
 
         print("=> Load depth model from checkpoint_Union")  
     
-    # 定义评价指标
     logfile_name = 'eval_A'
     logger = train_utils.initialize_logger(args, logfile_name)
 
-    train_objective = ['EPE3D'] # Note: we don't use RPE for training
+    train_objective = ['EPE3D']
     eval_objectives = ['EPE3D', 'RPE']
 
-    # evaluate results per trajectory per key-frame
     outputs = {}
     outputs_d={}
     for test_name, testset in data_loader_test.items():
@@ -106,7 +99,6 @@ def test_TrustRegion_A_Reloc3r(args,model_args):
             eval_name   = eval_name,
             timers      = timers)
         
-        # collect results 
         outputs = pd.Series([eval_pose_info['epes'].mean(), 
             eval_pose_info['angular_error'].mean(), 
             eval_pose_info['translation_error'].mean(), 
@@ -124,13 +116,10 @@ def test_TrustRegion_A_Reloc3r(args,model_args):
     print("""             Generate the final evaluation results               """)
     print(""" =============================================================== """)
 
-    # outputs_d_pd = pd.DataFrame(outputs_d).T
-
-
     outputs_pd = pd.DataFrame(outputs).T
-    outputs_pd['3D EPE'] *= 100 # convert to cm
-    outputs_pd['axis error'] *= (180/np.pi) # convert to degree
-    outputs_pd['trans error'] *= 100 # convert to cm
+    outputs_pd['3D EPE'] *= 100
+    outputs_pd['axis error'] *= (180/np.pi)
+    outputs_pd['trans error'] *= 100
 
     print(outputs_pd)
 
@@ -143,7 +132,6 @@ def test_TrustRegion_A_classic(args,model_args):
     else:
         timers = None
 
-    
     obj_has_mask = False
     print('Building test dataset {:s}'.format(args.test_dataset))
     data_loader_test = {dataset.split('(')[0]: build_dataset(dataset, args.batch_size, args.num_workers, test=True)
@@ -162,14 +150,12 @@ def test_TrustRegion_A_classic(args,model_args):
 
         print("=> Load depth model from checkpoint_Union")  
     
-    # 定义评价指标
     logfile_name = 'eval_A'
     logger = train_utils.initialize_logger(args, logfile_name)
 
-    train_objective = ['EPE3D'] # Note: we don't use RPE for training
+    train_objective = ['EPE3D']
     eval_objectives = ['EPE3D', 'RPE']
 
-    # evaluate results per trajectory per key-frame
     outputs = {}
     outputs_d={}
     for test_name, testset in data_loader_test.items():
@@ -181,7 +167,6 @@ def test_TrustRegion_A_classic(args,model_args):
             device  = args.device, 
             eval_name   = eval_name,
             timers      = timers)
-        # collect results 
         outputs = pd.Series([eval_pose_info['epes'].mean(), 
             eval_pose_info['angular_error'].mean(), 
             eval_pose_info['translation_error'].mean(), 
@@ -199,13 +184,10 @@ def test_TrustRegion_A_classic(args,model_args):
     print("""             Generate the final evaluation results               """)
     print(""" =============================================================== """)
 
-    # outputs_d_pd = pd.DataFrame(outputs_d).T
-
-
     outputs_pd = pd.DataFrame(outputs).T
-    outputs_pd['3D EPE'] *= 100 # convert to cm
-    outputs_pd['axis error'] *= (180/np.pi) # convert to degree
-    outputs_pd['trans error'] *= 100 # convert to cm
+    outputs_pd['3D EPE'] *= 100
+    outputs_pd['axis error'] *= (180/np.pi)
+    outputs_pd['trans error'] *= 100
 
     print(outputs_pd)
 
@@ -218,7 +200,6 @@ def test_TrustRegion_A_SPSG(args,model_args):
     else:
         timers = None
 
-    
     obj_has_mask = False
     print('Building test dataset {:s}'.format(args.test_dataset))
     data_loader_test = {dataset.split('(')[0]: build_dataset(dataset, args.batch_size, args.num_workers, test=True)
@@ -236,14 +217,12 @@ def test_TrustRegion_A_SPSG(args,model_args):
         net.load_state_dict(torch.load(args.checkpoint_Union)['state_dict'], strict=False)
         print("=> Load depth model from checkpoint_Union",args.checkpoint_Union)  
     
-    # 定义评价指标
     logfile_name = 'eval_A'
     logger = train_utils.initialize_logger(args, logfile_name)
 
-    train_objective = ['EPE3D'] # Note: we don't use RPE for training
+    train_objective = ['EPE3D']
     eval_objectives = ['EPE3D', 'RPE']
 
-    # evaluate results per trajectory per key-frame
     outputs = {}
     outputs_d={}
     for test_name, testset in data_loader_test.items():
@@ -256,7 +235,6 @@ def test_TrustRegion_A_SPSG(args,model_args):
             device  = args.device, 
             eval_name   = eval_name,
             timers      = timers)
-        # collect results 
         outputs = pd.Series([eval_pose_info['epes'].mean(), 
             eval_pose_info['angular_error'].mean(), 
             eval_pose_info['translation_error'].mean(), 
@@ -274,13 +252,10 @@ def test_TrustRegion_A_SPSG(args,model_args):
     print("""             Generate the final evaluation results               """)
     print(""" =============================================================== """)
 
-    # outputs_d_pd = pd.DataFrame(outputs_d).T
-
-
     outputs_pd = pd.DataFrame(outputs).T
-    outputs_pd['3D EPE'] *= 100 # convert to cm
-    outputs_pd['axis error'] *= (180/np.pi) # convert to degree
-    outputs_pd['trans error'] *= 100 # convert to cm
+    outputs_pd['3D EPE'] *= 100
+    outputs_pd['axis error'] *= (180/np.pi)
+    outputs_pd['trans error'] *= 100
 
     print(outputs_pd)
 
@@ -293,7 +268,6 @@ def test_TrustRegion_A(args,model_args):
     else:
         timers = None
 
-    
     obj_has_mask = False
     print('Building test dataset {:s}'.format(args.test_dataset))
     data_loader_test = {dataset.split('(')[0]: build_dataset(dataset, args.batch_size, args.num_workers, test=True)
@@ -314,18 +288,15 @@ def test_TrustRegion_A(args,model_args):
         print("=> Load depth model from checkpoint_Union")  
     elif args.checkpoint_Union !='':
         print('==============')
-        # net.load_state_dict(torch.load(args.checkpoint_Union)['state_dict'])
         net.load_state_dict(torch.load(args.checkpoint_Union, map_location=torch.device('cpu'))['state_dict'], strict=False)
         print("=> Load depth model from checkpoint_Union")  
 
-    # 定义评价指标
     logfile_name = 'eval_A'
     logger = train_utils.initialize_logger(args, logfile_name)
 
-    train_objective = ['EPE3D'] # Note: we don't use RPE for training
+    train_objective = ['EPE3D']
     eval_objectives = ['EPE3D', 'RPE']
 
-    # evaluate results per trajectory per key-frame
     outputs = {}
     outputs_d={}
     for test_name, testset in data_loader_test.items():
@@ -337,7 +308,6 @@ def test_TrustRegion_A(args,model_args):
             eval_name   = eval_name,
             timers      = timers)
         
-        # collect results 
         outputs = pd.Series([eval_pose_info['epes'].mean(), 
             eval_pose_info['angular_error'].mean(), 
             eval_pose_info['translation_error'].mean(), 
@@ -355,13 +325,10 @@ def test_TrustRegion_A(args,model_args):
     print("""             Generate the final evaluation results               """)
     print(""" =============================================================== """)
 
-    # outputs_d_pd = pd.DataFrame(outputs_d).T
-
-
     outputs_pd = pd.DataFrame(outputs).T
-    outputs_pd['3D EPE'] *= 100 # convert to cm
-    outputs_pd['axis error'] *= (180/np.pi) # convert to degree
-    outputs_pd['trans error'] *= 100 # convert to cm
+    outputs_pd['3D EPE'] *= 100
+    outputs_pd['axis error'] *= (180/np.pi)
+    outputs_pd['trans error'] *= 100
 
     print(outputs_pd)
 
@@ -383,7 +350,7 @@ if __name__ == '__main__':
     args.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     args.batch_per_gpu = 128
     
-    # 在此初更改测试数据集
+    # datasets
     # args.test_dataset="ARKitScenes(split='test', resolution=[(320,240)])"
     # args.test_dataset="1_000 @ ScanNet1500(resolution=(320, 240), seed=777)" 
     args.test_dataset="ScanNet1500(resolution=(320, 240), seed=777)" 
@@ -399,7 +366,7 @@ if __name__ == '__main__':
     print('Using device : ', args.device)
     args.start_epoch = 0
 
-    # 在此初更改测试模型
+    # models
     # args.model = 'DepthPoseNet_Deeplabv3(model_args)'
     args.model = 'DepthPoseNet(model_args)'
 
@@ -409,7 +376,7 @@ if __name__ == '__main__':
     # args.model = 'Classic()'
     print('=> Set Model...', args.model)
 
-    # 在此初更改训练权重
+    # checkpoints
     if 'DepthPoseNet' in args.model:
         args.require_IMU=True
         args.require_dicInput=False

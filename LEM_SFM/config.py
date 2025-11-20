@@ -1,9 +1,3 @@
-""" 
-Add the configurations by modules
-
-@author: Zhaoyang Lv
-@date: March 2019
-"""
 import argparse
 import LEM_SFM.config as config
 
@@ -88,7 +82,6 @@ def add_test_basics_config(parser):
 
 def add_train_basics_config(parser):
     """ add the basics about the training """
-    #要不要加载checkpoint
     # parser.add_argument('--checkpoint', default='', type=str,
     #     help='Choose a pretrained checkpoint model to start with. \n')
     # parser.add_argument('--batch_per_gpu', default=64, type=int,

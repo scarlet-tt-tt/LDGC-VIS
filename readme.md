@@ -57,7 +57,7 @@ The LEM-SFM-L model contains only 12.1M parameters, which is about one thirty fi
 
 1. Clone LEM-SFM
 ```bash
-git clone --recursive https://github.com/xxxxxxxxx.git
+git clone --recursive https://github.com/scarlet-tt-tt/LEM-SFM.git
 cd LEM-SFM
 
 
@@ -81,7 +81,7 @@ In this example, we assume the input pose to be 0. The results are only for demo
 You can also modify the `v1_path` and `v2_path` to infer depth for other images.
 
 ```bash
-python infer_pose.py --v1_path data/TUM_fr3_sitting_halfsphere_1.png --v2_path data/TUM_fr3_sitting_halfsphere_2.png --output_folder data/
+python infer_pose.py
 ```
 
 LEM-SFM also pre-trains a lightweight depth estimation module (DM) to infer the environmental depth of images, requiring only 1.49M model parameters.
@@ -149,4 +149,4 @@ TODO
 
 ## Acknowledgments
 
-Thanks to these great repositories: [Croco](https://github.com/naver/croco), [DUSt3R](https://github.com/naver/dust3r), [reloc3r](https://github.com/ffrivera0/reloc3r),[starnet](https://github.com/ma-xu/Rewrite-the-Stars),[deepICN](https://github.com/lvzhaoyang/DeeperInverseCompositionalAlgorithm) and many other inspiring works in the community.
+Thanks to these great repositories: [Croco](https://github.com/naver/croco), [DUSt3R](https://github.com/naver/dust3r), [reloc3r](https://github.com/ffrivera0/reloc3r),[starnet](https://github.com/ma-xu/Rewrite-the-Stars),[deepICN](https://github.com/lvzhaoyang/DeeperInverseCompositionalAlgorithm), [deeplab v3](https://github.com/fregu856/deeplabv3) and many other inspiring works in the community.

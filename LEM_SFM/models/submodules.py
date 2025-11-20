@@ -1,10 +1,3 @@
-"""
-Submodules to build up CNN
-
-@author: Zhaoyang Lv
-@date: March, 2019
-"""
-
 from __future__ import print_function
 
 import torch.nn as nn

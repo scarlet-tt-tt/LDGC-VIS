@@ -69,5 +69,6 @@ if __name__ == '__main__':
     parser.add_argument('--img_path2', type=str, default='data/TUM_fr3_sitting_halfsphere_2.png')
     parser.add_argument('--output_folder', type=str, default='data/')
     args = parser.parse_args()
+
     infer_pose(img_path1 = args.img_path1,img_path2 = args.img_path2 , output_folder = args.output_folder)
 

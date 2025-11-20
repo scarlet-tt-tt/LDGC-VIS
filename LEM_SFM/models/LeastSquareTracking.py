@@ -1,11 +1,3 @@
-"""
-The learned Inverse Compositional Tracking.
-Support both ego-motion and object-motion tracking
-
-@author: Zhaoyang Lv
-@Date: March, 2019
-"""
-
 import torch
 import torch.nn as nn
 import numpy as np

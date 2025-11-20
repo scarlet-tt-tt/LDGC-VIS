@@ -1,10 +1,3 @@
-"""
-The algorithm backbone, primarily the three contributions proposed in our paper
-
-@author: Zhaoyang Lv
-@date: March, 2019
-"""
-
 import torch
 import torch.nn as nn
 import torchvision.models as models
@@ -176,18 +169,7 @@ class TrustRegionBase(nn.Module):
         ------------
         :return precomputed image Jacobian on template
         """
-        """在参考系上预先计算图像雅可比矩阵
-        参考论文中的方程式（13）
-                
-        ：参数invD，模板深度
-        ：参数x，模板特征
-        ：param-px，cols（x）中的归一化图像坐标
-        ：参数py，行（y）中的归一化图像坐标
-        ：参数K，固有参数[fx，fy，cx，cy]
 
-        ------------
-        ：返回模板上预先计算的图像雅可比矩阵
-        """
         Jf_x, Jf_y = feature_gradient(x)
         Jx_p, Jy_p = compute_jacobian_warping(invD, K, px, py)
         J_F_p = compute_jacobian_dIdp(Jf_x, Jf_y, Jx_p, Jy_p)
@@ -297,18 +279,7 @@ class TrustRegionBase_i(nn.Module):
         ------------
         :return precomputed image Jacobian on template
         """
-        """在参考系上预先计算图像雅可比矩阵
-        参考论文中的方程式（13）
-                
-        ：参数invD，模板深度
-        ：参数x，模板特征
-        ：param-px，cols（x）中的归一化图像坐标
-        ：参数py，行（y）中的归一化图像坐标
-        ：参数K，固有参数[fx，fy，cx，cy]
 
-        ------------
-        ：返回模板上预先计算的图像雅可比矩阵
-        """
         Jf_x, Jf_y = feature_gradient(x)
         Jx_p, Jy_p = compute_jacobian_warping(invD, K, px, py)
         J_F_p = compute_jacobian_dIdp(Jf_x, Jf_y, Jx_p, Jy_p)
@@ -317,8 +288,6 @@ class TrustRegionBase_i(nn.Module):
 
 class ImagePyramids(nn.Module):
     """ Construct the pyramids in the image / depth space
-    """
-    """在图像/深度空间中构建金字塔
     """
     def __init__(self, scales, pool='avg'):
         super(ImagePyramids, self).__init__()
@@ -338,10 +307,7 @@ class FeaturePyramid(nn.Module):
     The proposed feature-encoder (A).
     It also supports to extract features using one-view only.
     """
-    """ 
-    所提出的特征编码器（A）。
-    它还支持仅使用一个视图提取特征。
-    """
+
     def __init__(self, D):
         super(FeaturePyramid, self).__init__()
         self.net0 = nn.Sequential(
@@ -382,10 +348,7 @@ class FeaturePyramid_new(nn.Module):
     The proposed feature-encoder (A).
     It also supports to extract features using one-view only.
     """
-    """ 
-    所提出的特征编码器（A）。
-    它还支持仅使用一个视图提取特征。
-    """
+
     def __init__(self, D):
         super(FeaturePyramid_new, self).__init__()
         self.net0 = nn.Sequential(
@@ -460,10 +423,6 @@ class DeepRobustEstimator(nn.Module):
     """ The M-estimator 
 
     When use estimator_type = 'MultiScale2w', it is the proposed convolutional M-estimator
-    """
-
-    """M估计量
-    当使用estimator_type='MultiScale2w'时，它是所提出的卷积M-估计器
     """
 
     def __init__(self):
@@ -551,21 +510,7 @@ class DirectSolverNet(nn.Module):
         -----------
         :return updated pose
         """
-        """
-        ：参数JtJ，近似的Hessian JtJ
-        ：参数Jt，变换雅可比矩阵
-        ：参数权重，权重矩阵
-        ：参数R，残差
-        ：param pose0，初始估计姿态
-        ：param invD0，模板逆深度图
-        ：param invD1，图像逆深度图
-        ：参数x0，模板特征图
-        ：param x1，图像特征图
-        ：param K，内部参数
 
-        -----------
-        ：返回更新的姿势
-        """
         B = JtJ.shape[0]
 
         wR = (weights * R).view(B, -1, 1)
@@ -611,21 +556,7 @@ class DirectSolverNet(nn.Module):
         ---------------
         :return the damped Hessian matrix
         """
-        """用剩余体积对近似值进行正则化
-        ：参数JtJ，近似的Hessian JtJ
-        ：参数Jt，变换雅可比矩阵
-        ：参数JtR，右手尺寸残差
-        ：参数权重，权重矩阵
-        ：param姿势，初始估计姿势
-        ：param invD0，模板逆深度图
-        ：param invD1，图像逆深度图
-        ：param K，内部参数
-        ：参数x0，模板特征图
-        ：param x1，图像特征图
-        ：param sample_range，样本数量
-        ---------------
-        ：返回阻尼Hessian矩阵
-        """
+
         # the following current support only single scale
         JtR_volumes = []
 
@@ -733,15 +664,7 @@ def compute_jacobian_warping(p_invdepth, K, px, py):
      ------------
     :return the warping jacobian in x, y direction
     """
-    """ 计算扭曲的（x，y）相对于逆深度的雅可比矩阵
-    （在原点处线性化）
-    ：param p_invdest输入逆深度
-    ：param固有校准
-    ：param像素x映射
-    ：param像素y映射
-    ------------
-    ：返回x、y方向上的扭曲雅可比矩阵
-    """
+
 
     B, C, H, W = p_invdepth.size()
     assert(C == 1)
