@@ -147,7 +147,7 @@ if __name__ == '__main__':
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
 
-    root = '/media/pan/089614D79614C6DA/temp/Linux/code/LEM-SFM-package/LEM-main/logs/checkpoint_epoch151'
+    root = '.../checkpoint_epoch151'
     dataset = TrajectoryDataset(root)
     train_size = int(0.8 * len(dataset))
     val_size = len(dataset) - train_size

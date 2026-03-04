@@ -1,5 +1,5 @@
 <p align="center">
-  <h2 align="center">LEM-SFM: A Lightweight End-to-end Monocular Visual-Inertial Pose Estimation Framework</h2>
+  <h2 align="center">LDGC-VIS: A Lightweight End-to-end Monocular Visual-Inertial Pose Estimation Framework</h2>
 </p>
 
 <p align="center">
@@ -9,23 +9,23 @@
 </p>
 
 <p align="center">
-<strong>LEM-SFM</strong> is a lightweight end-to-end visual-inertial fusion pose estimation method, tailored for micro- and nanoscale unmanned systems.Its network design with explicit geometric constraints and aiming to balance localization accuracy and computational eﬀiciency.
+<strong>LDGC-VIS</strong> is a lightweight end-to-end visual-inertial fusion pose estimation method, tailored for micro- and nanoscale unmanned systems.Its network design with explicit geometric constraints and aiming to balance localization accuracy and computational eﬀiciency.
 </p>
 <br>
 
 <p align="center">
   <a href="">
-    <img src="media/combined_trajectories.png" alt="Teaser" width="100%">
+    <img src="media/combined_trajectories.svg" alt="Teaser" width="100%">
   </a>
 </p>
 <p align="center">
   <a href="">
-    <img src="media/evaluation.png" alt="Teaser" width="100%">
+    <img src="media/evaluate.png" alt="Teaser" width="100%">
   </a>
 </p>
 
 <p align="center">
-The LEM-SFM-L model contains only 12.1M parameters, which is about one thirty fifth of the size of Reloc3r, yet it improves accuracy by 11.1% on TUM and 13.3% on ScanNet in zero shot evaluation. Even with fewer parameters and limited training data, LEM-SFM consistently delivers higher accuracy, better generalization, and faster inference.
+The LDGC-VIS-L model contains only 12.1M parameters, which is about one thirty fifth of the size of Reloc3r, yet it improves accuracy by 11.1% on TUM and 13.3% on ScanNet in zero shot evaluation. Even with fewer parameters and limited training data, LDGC-VIS consistently delivers higher accuracy, better generalization, and faster inference.
 </p>
 <be>
 
@@ -47,7 +47,7 @@ The LEM-SFM-L model contains only 12.1M parameters, which is about one thirty fi
 
 - [ x ] Release pre-trained weights and inference code. 
 - [ x ] Release the original drawing code and raw data from the paper. 
-- [ x ] Release the key module visualization code for the LEM-SFM on the Arkitscenes, TUM, and ScanNet1500 datasets.
+- [ x ] Release the key module visualization code for the LDGC-VIS on the Arkitscenes, TUM, and ScanNet1500 datasets.
 - [   ] Release evaluation code for Arkitscenes, TUM and ScanNet1500 datasets. 
 - [   ] Release comparison code with reloc3r, LoFTR, ORB, and SIFT
 - [   ] Release training code and data.
@@ -55,26 +55,26 @@ The LEM-SFM-L model contains only 12.1M parameters, which is about one thirty fi
 
 ## Installation
 
-1. Clone LEM-SFM
+1. Clone LDGC-VIS
 ```bash
-git clone --recursive https://github.com/scarlet-tt-tt/LEM-SFM.git
-cd LEM-SFM
+git clone --recursive https://github.com/scarlet-tt-tt/LDGC-VIS.git
+cd LDGC-VIS
 
 
 2. Create the environment using conda
 ```bash
 # This section is similar to the environment setup for reloc3r. If you have already set up reloc3r, you can run it directly in the reloc3r environment with only minor modifications.
-conda create -n LEM-SFM python=3.11 cmake=3.14.0
-conda activate LEM-SFM 
+conda create -n LDGC-VIS python=3.11 cmake=3.14.0
+conda activate LDGC-VIS 
 conda install pytorch torchvision pytorch-cuda=12.1 -c pytorch -c nvidia  # use the correct version of cuda for your system
 pip install -r requirements_reloc3r.txt
-# add support for LEM-SFM
+# add support for LDGC-VIS
 pip install -r requirements_addition.txt
 ```
 
 ## Inference
 
-Using LEM-SFM, you can estimate camera poses for images you captured. 
+Using LDGC-VIS, you can estimate camera poses for images you captured. 
 
 In this example, we assume the input pose to be 0. The results are only for demonstration purposes and do not represent the accuracy of this model.
 
@@ -84,7 +84,7 @@ You can also modify the `v1_path` and `v2_path` to infer depth for other images.
 python infer_pose.py
 ```
 
-LEM-SFM also pre-trains a lightweight depth estimation module (DM) to infer the environmental depth of images, requiring only 1.49M model parameters.
+LDGC-VIS also pre-trains a lightweight depth estimation module (DM) to infer the environmental depth of images, requiring only 1.49M model parameters.
 
 The results of running the program on `data/7Scenes_fire.png` and `data/7Scenes_pumpkin.png` are shown in `data/7Scenes_fire_depth.png` and `data/7Scenes_pumpkin_depth.png`.
 

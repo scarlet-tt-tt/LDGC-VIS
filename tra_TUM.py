@@ -118,7 +118,7 @@ def plot_combined(root1, root2, pkl_files1, pkl_files2):
                 ax3.plot([trajectory_gt[i, 0], trajectory_est[i, 0]],
                          [trajectory_gt[i, 1], trajectory_est[i, 1]], color='gray', alpha=0.25)
         if idx == 0:
-            ax3.set_ylabel('LEM-SFM Y(m)', fontsize=12)
+            ax3.set_ylabel('LDGC-VIS Y(m)', fontsize=12)
         ax3.tick_params(axis='y', labelrotation=90, labelsize=8.5)
         ax3.tick_params(axis='x', labelsize=8.5)
     
