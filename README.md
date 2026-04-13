@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="">
-    <img src="media/overview.png" alt="Teaser" width="100%">
+    <img src="media/overview.svg" alt="Teaser" width="100%">
   </a>
 </p>
 
@@ -37,6 +37,7 @@ The LDGC-VIS-L model contains only 12.1M parameters, which is about one thirty f
 - [Inference](#Inference)
 - [key visualization](#Raw-data-and-key-visualization)
 - [Key module visualization ](#Key-module-visualization )
+- [Interpretability (DM & FWM)](#Interpretability-dm--fwm)
 - [Eval](#Eval)
 - [Comparison](#comparison)
 - [Train](#Train)
@@ -118,6 +119,28 @@ For example, for ScanNet1500, place the dataset in the `data/scannet1500` folder
 ```bash
 python visual_key_module.py --max_num 10
 ```
+
+## Interpretability (DM & FWM)
+
+### DM (Depth Module)
+The zero-shot performance of the pretrained depth estimation network is visualized below, based on the DM right after pretraining (before end-to-end joint adaptation for downstream pose estimation).  
+Preview image: `media/DM_V.png` (original vector file: [media/DM_V.pdf](media/DM_V.pdf)).
+
+<p align="center">
+  <img src="media/DM_V.png" alt="DM visualization on ScanNet1500" width="100%">
+</p>
+
+In unseen environments, the pretrained DM preserves coherent scene geometry and captures relative spatial ordering, while maintaining low computational cost (0.609 GFLOPs).
+
+### FWM (Feature Weighting Module)
+The outputs of the FWM module are visualized as feature and weight maps below.  
+Preview image: `media/FWM_3.png` (original vector file: [media/FWM_3.pdf](media/FWM_3.pdf)).
+
+<p align="center">
+  <img src="media/FWM_3.png" alt="FWM feature and weight map visualization on ScanNet1500" width="100%">
+</p>
+
+FWM emphasizes stable indoor structural cues (e.g., walls and architectural outlines), and suppresses dynamic or ambiguous regions (e.g., doors, swivel chairs). It also down-weights hard-to-match or scale-ambiguous objects (e.g., bags, quilts, plastic bags), improving robustness of feature selection.
 
 ## Eval
 You can run the `evaluate_A.py` function to obtain results similar to those in the paper.
