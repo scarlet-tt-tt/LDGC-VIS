@@ -49,7 +49,7 @@ The LDGC-VIS-L model contains only 12.1M parameters, which is about one thirty f
 - [ x ] Release pre-trained weights and inference code. 
 - [ x ] Release the original drawing code and raw data from the paper. 
 - [ x ] Release the key module visualization code for the LDGC-VIS on the Arkitscenes, TUM, and ScanNet1500 datasets.
-- [   ] Release evaluation code for Arkitscenes, TUM and ScanNet1500 datasets. 
+- [ x ] Release evaluation code for Arkitscenes, TUM and ScanNet1500 datasets. 
 - [   ] Release comparison code with reloc3r, LoFTR, ORB, and SIFT
 - [   ] Release training code and data.
 
