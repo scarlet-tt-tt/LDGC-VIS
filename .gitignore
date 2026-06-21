@@ -1,6 +1,22 @@
-data/scannet1500
-# raw_data/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+.codex
+.codex/
+
 logs/
+baseline_eval_results*/
+eval_results*/
+
+# Large external datasets and third-party source trees prepared on each host.
+data/scannet1500/
+data/arkitscenes_processed/
+LoFTR/data/scannet/train
 croco/
-reloc3r/
-*.pyc
+dust3r_main/
+EfficientLoFTR/
+
+# Large model weights. Put these on the remote server manually or use Git LFS.
+checkpoints/*.pth
+*.ckpt

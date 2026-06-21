@@ -117,7 +117,6 @@ def evaluate_trust_region_A(dataloader, net, objectives, eval_name='', epoch=Non
         dataloader.sampler.set_epoch(epoch)
     for idx, batch in enumerate(progress):
         if timers: timers.tic('forward step')
-        names = 'names'
         for view in batch:
             for name in 'img camera_intrinsics camera_pose depth'.split(): 
                 if name not in view:
@@ -128,6 +127,13 @@ def evaluate_trust_region_A(dataloader, net, objectives, eval_name='', epoch=Non
         depth1_gt = view1['depth']
         color0 = view0['img']
         color1 = view1['img']
+        if 'label' in view0 and 'instance' in view0 and 'instance' in view1:
+            names = [
+                f"{label}:{inst0}->{inst1}"
+                for label, inst0, inst1 in zip(view0['label'], view0['instance'], view1['instance'])
+            ]
+        else:
+            names = [''] * color0.shape[0]
         K = intrinsics_matrix_to_k(view0['camera_intrinsics'])
         pose1_np = view0['camera_pose'].cpu().numpy() 
         pose2_np = view1['camera_pose'].cpu().numpy()
@@ -137,9 +143,22 @@ def evaluate_trust_region_A(dataloader, net, objectives, eval_name='', epoch=Non
         B, _, H, W = depth0_gt.shape
         with torch.no_grad():
             R_gt, t_gt = Rt[:,:3,:3], Rt[:,:3,3]
-            s_pose0 = simulate_pose_from_imu(R_gt, t_gt, dt=args.dt, noise_std_gyro=args.noise_gyro, noise_std_accel=args.noise_accel)
-            output, pre_depth0 = net.forward(color0, color1, K, s_pose0)
-            R, t = output
+            if getattr(args, 'require_IMU', False) and not getattr(args, 'require_dicInput', False):
+                s_pose0 = simulate_pose_from_imu(
+                    R_gt,
+                    t_gt,
+                    dt=getattr(args, 'dt', 0.1),
+                    noise_std_gyro=getattr(args, 'noise_gyro', 0.0),
+                    noise_std_accel=getattr(args, 'noise_accel', 0.0),
+                )
+                output, pre_depth0 = net.forward(color0, color1, K, s_pose0)
+                R, t = output
+            elif getattr(args, 'require_dicInput', False):
+                output1, output2 = net.forward(view0, view1)
+                R, t = output1['pose'][:,:3,:3], output1['pose'][:,:3,3]
+            else:
+                output = net.forward(color0, color1, K)
+                R, t = output
         import torch.nn.functional as F
         t_pred_norm = F.normalize(t, p=2, dim=1)
         scale = torch.sum(t_pred_norm * t_gt, dim=1, keepdim=True)
